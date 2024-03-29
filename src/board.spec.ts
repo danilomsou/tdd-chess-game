@@ -19,4 +19,20 @@ describe("Board ", () => {
       expect(row.length).toBe(8);
     });
   });
+
+  it("should have a white cell and an alternating black cell.", () => {
+    const board = new Board();
+
+    board.create();
+
+    board.rows.forEach((row, rowIndex) => {
+      row.forEach((cell, cellIndex) => {
+        if ((rowIndex + cellIndex) % 2 === 0) {
+          expect(cell.color).toBe("white");
+        } else {
+          expect(cell.color).toBe("black");
+        }
+      });
+    });
+  });
 });
