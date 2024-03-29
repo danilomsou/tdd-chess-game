@@ -35,4 +35,13 @@ describe("Board ", () => {
       });
     });
   });
+
+  it("should create a board with a white cell at the bottom right for each player", () => {
+    const board = new Board();
+
+    board.create();
+
+    expect(board.rows[7][7].color).toBe("white");
+    expect(board.rows[0][0].color).toBe("white");
+  });
 });
