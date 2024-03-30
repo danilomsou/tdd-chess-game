@@ -96,4 +96,28 @@ describe("Board", () => {
       expect([1, 6]).toContain(rook.column);
     });
   });
+
+  it("should create a board with 2 bishops for each player in the correct positions", () => {
+    const whiteBishops = board.getPiece({
+      color: Color.WHITE,
+      type: PieceType.BISHOP,
+    });
+    const blackBishops = board.getPiece({
+      color: Color.BLACK,
+      type: PieceType.BISHOP,
+    });
+
+    expect(whiteBishops.length).toBe(2);
+    expect(blackBishops.length).toBe(2);
+
+    whiteBishops.forEach((rook) => {
+      expect(rook.row).toBe(0);
+      expect([2, 5]).toContain(rook.column);
+    });
+
+    blackBishops.forEach((rook) => {
+      expect(rook.row).toBe(7);
+      expect([2, 5]).toContain(rook.column);
+    });
+  });
 });
