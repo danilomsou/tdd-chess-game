@@ -43,4 +43,25 @@ describe("Board ", () => {
 
     expect(board.cells.length).toBe(64);
   });
+
+  it("should have a white cell and an alternating black cell.", () => {
+    const board = setUp();
+
+    board.cells.forEach((cell: Cell) => {
+      if (cell.row % 2 === 0 && cell.column % 2 === 0) {
+        expect(cell.color).toBe(Color.WHITE);
+      } else if (cell.row % 2 !== 0 && cell.column % 2 !== 0) {
+        expect(cell.color).toBe(Color.WHITE);
+      } else {
+        expect(cell.color).toBe(Color.BLACK);
+      }
+    });
+  });
+
+  it("should create a board with a white cell at the bottom right for each player", () => {
+    const board = setUp();
+
+    expect(board.getCellColor({ row: 7, column: 7 })).toBe(Color.WHITE);
+    expect(board.getCellColor({ row: 0, column: 0 })).toBe(Color.WHITE);
+  });
 });
