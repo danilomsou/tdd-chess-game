@@ -110,4 +110,21 @@ describe("Board", () => {
       expectedColumns: [2, 5],
     });
   });
+
+  it("should create a board with queen on the central cell of the same color of that of the piece", () => {
+    const whiteQueenCell = board.getCellsOfPiece({
+      color: Color.WHITE,
+      type: PieceType.QUEEN,
+    })[0];
+    const blackQueenCell = board.getCellsOfPiece({
+      color: Color.BLACK,
+      type: PieceType.QUEEN,
+    })[0];
+
+    expect(whiteQueenCell.row).toBe(7);
+    expect(whiteQueenCell.color).toBe(Color.WHITE);
+
+    expect(blackQueenCell.row).toBe(0);
+    expect(blackQueenCell.color).toBe(Color.BLACK);
+  });
 });
