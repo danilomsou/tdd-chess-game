@@ -29,20 +29,17 @@ describe("Board", () => {
   });
 
   it("should create a board with 8 pawns for each player in the correct positions", () => {
-    const whitePawns = board.cells.filter(
-      ({ piece, row }) =>
-        piece?.type === PieceType.PAWN &&
-        piece.color === Color.WHITE &&
-        row === 1
-    );
-    const blackPawns = board.cells.filter(
-      ({ piece, row }) =>
-        piece?.type === PieceType.PAWN &&
-        piece.color === Color.BLACK &&
-        row === 6
-    );
+    const whitePawns = board.getPawns(Color.WHITE);
+    const blackPawns = board.getPawns(Color.BLACK);
 
     expect(whitePawns.length).toBe(8);
     expect(blackPawns.length).toBe(8);
+
+    whitePawns.map(({ row }) => {
+      expect(row).toBe(1);
+    });
+    blackPawns.map(({ row }) => {
+      expect(row).toBe(6);
+    });
   });
 });
