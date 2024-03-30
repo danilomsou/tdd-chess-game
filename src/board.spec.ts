@@ -29,8 +29,14 @@ describe("Board", () => {
   });
 
   it("should create a board with 8 pawns for each player in the correct positions", () => {
-    const whitePawns = board.getPawns(Color.WHITE);
-    const blackPawns = board.getPawns(Color.BLACK);
+    const whitePawns = board.getPiece({
+      color: Color.WHITE,
+      type: PieceType.PAWN,
+    });
+    const blackPawns = board.getPiece({
+      color: Color.BLACK,
+      type: PieceType.PAWN,
+    });
 
     expect(whitePawns.length).toBe(8);
     expect(blackPawns.length).toBe(8);
@@ -40,6 +46,30 @@ describe("Board", () => {
     });
     blackPawns.map(({ row }) => {
       expect(row).toBe(6);
+    });
+  });
+
+  it("should create a board with 2 rooks for each player in the correct positions", () => {
+    const whiteRooks = board.getPiece({
+      color: Color.WHITE,
+      type: PieceType.ROOK,
+    });
+    const blackRooks = board.getPiece({
+      color: Color.BLACK,
+      type: PieceType.ROOK,
+    });
+
+    expect(whiteRooks.length).toBe(2);
+    expect(blackRooks.length).toBe(2);
+
+    whiteRooks.forEach((rook) => {
+      expect(rook.row).toBe(0);
+      expect([0, 7]).toContain(rook.column);
+    });
+
+    blackRooks.forEach((rook) => {
+      expect(rook.row).toBe(7);
+      expect([0, 7]).toContain(rook.column);
     });
   });
 });
