@@ -61,7 +61,10 @@ describe("Board ", () => {
   it("should create a board with a white cell at the bottom right for each player", () => {
     const board = setUp();
 
-    expect(board.getCellColor({ row: 7, column: 7 })).toBe(Color.WHITE);
-    expect(board.getCellColor({ row: 0, column: 0 })).toBe(Color.WHITE);
+    const firstPlayerLastRightCell = { row: 7, column: 7 };
+    const secondPlayerFirstRightCell = { row: 0, column: 0 };
+
+    expect(board.getCellColor(firstPlayerLastRightCell)).toBe(Color.WHITE);
+    expect(board.getCellColor(secondPlayerFirstRightCell)).toBe(Color.WHITE);
   });
 });
