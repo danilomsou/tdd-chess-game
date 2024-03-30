@@ -8,6 +8,7 @@ export enum PieceType {
   ROOK = "rook",
   KNIGHT = "knight",
   BISHOP = "bishop",
+  QUEEN = "queen",
 }
 
 export type Piece = {
@@ -56,6 +57,7 @@ export class Board {
     this.populateRooks();
     this.populateKnights();
     this.populateBishops();
+    this.populateQueens();
   }
 
   private populatePawns() {
@@ -84,6 +86,22 @@ export class Board {
   private populateBishops() {
     const positions = [2, this.BOARD_SIZE - 3];
     this.placePieces({ positions, pieceType: PieceType.BISHOP });
+  }
+
+  private populateQueens() {
+    const whiteQueenColumn = this.BOARD_SIZE - 4;
+    const blackQueenColumn = 3;
+
+    this.cells[whiteQueenColumn - 1].piece = {
+      type: PieceType.QUEEN,
+      color: Color.BLACK,
+    };
+    this.cells[
+      blackQueenColumn + (this.BOARD_SIZE - 1) * this.BOARD_SIZE
+    ].piece = {
+      type: PieceType.QUEEN,
+      color: Color.WHITE,
+    };
   }
 
   private placePiecesInRow({ row, pieceType, color }: PlacePiecesInRowProps) {
