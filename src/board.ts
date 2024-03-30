@@ -22,16 +22,24 @@ export type Cell = {
   column: number;
 };
 
+type PlacePiecesInRowProps = {
+  pieceType: PieceType;
+  color: Color;
+  row: number;
+};
+
+type PlacePiecesProps = {
+  pieceType: PieceType;
+  positions: Array<number>;
+};
+
 export class Board {
   private BOARD_SIZE = 8;
   cells: Cell[] = [];
 
   constructor() {
     this.initializeBoard();
-    this.populatePawns();
-    this.populateRook();
-    this.populateKnight();
-    this.populateBishops();
+    this.populatePieces();
   }
 
   private initializeBoard() {
@@ -43,59 +51,53 @@ export class Board {
     }
   }
 
+  private populatePieces() {
+    this.populatePawns();
+    this.populateRooks();
+    this.populateKnights();
+    this.populateBishops();
+  }
+
   private populatePawns() {
-    for (let column = 0; column < this.BOARD_SIZE; column++) {
-      this.cells[this.BOARD_SIZE + column].piece = {
-        type: PieceType.PAWN,
-        color: Color.WHITE,
-      };
-      this.cells[48 + column].piece = {
-        type: PieceType.PAWN,
-        color: Color.BLACK,
-      };
-    }
-  }
-
-  private populateRook() {
-    const lastRow = this.BOARD_SIZE - 1;
-    const rookPositions = [0, this.BOARD_SIZE - 1];
-
-    rookPositions.forEach((position) => {
-      this.cells[position].piece = { type: PieceType.ROOK, color: Color.WHITE };
-      this.cells[position + lastRow * this.BOARD_SIZE].piece = {
-        type: PieceType.ROOK,
-        color: Color.BLACK,
-      };
+    this.placePiecesInRow({
+      pieceType: PieceType.PAWN,
+      color: Color.WHITE,
+      row: 1,
+    });
+    this.placePiecesInRow({
+      pieceType: PieceType.PAWN,
+      color: Color.BLACK,
+      row: 6,
     });
   }
 
-  private populateKnight() {
-    const lastRow = this.BOARD_SIZE - 1;
-    const knightPositions = [1, this.BOARD_SIZE - 2];
+  private populateRooks() {
+    const positions = [0, this.BOARD_SIZE - 1];
+    this.placePieces({ positions, pieceType: PieceType.ROOK });
+  }
 
-    knightPositions.forEach((position) => {
-      this.cells[position].piece = {
-        type: PieceType.KNIGHT,
-        color: Color.WHITE,
-      };
-      this.cells[position + lastRow * this.BOARD_SIZE].piece = {
-        type: PieceType.KNIGHT,
-        color: Color.BLACK,
-      };
-    });
+  private populateKnights() {
+    const positions = [1, this.BOARD_SIZE - 2];
+    this.placePieces({ positions, pieceType: PieceType.KNIGHT });
   }
 
   private populateBishops() {
-    const lastRow = this.BOARD_SIZE - 1;
-    const bishopsPositions = [2, this.BOARD_SIZE - 3];
+    const positions = [2, this.BOARD_SIZE - 3];
+    this.placePieces({ positions, pieceType: PieceType.BISHOP });
+  }
 
-    bishopsPositions.forEach((position) => {
-      this.cells[position].piece = {
-        type: PieceType.BISHOP,
-        color: Color.WHITE,
-      };
-      this.cells[position + lastRow * this.BOARD_SIZE].piece = {
-        type: PieceType.BISHOP,
+  private placePiecesInRow({ row, pieceType, color }: PlacePiecesInRowProps) {
+    for (let column = 0; column < this.BOARD_SIZE; column++) {
+      const index = row * this.BOARD_SIZE + column;
+      this.cells[index].piece = { type: pieceType, color };
+    }
+  }
+
+  private placePieces({ positions, pieceType }: PlacePiecesProps) {
+    positions.forEach((position) => {
+      this.cells[position].piece = { type: pieceType, color: Color.WHITE };
+      this.cells[position + (this.BOARD_SIZE - 1) * this.BOARD_SIZE].piece = {
+        type: pieceType,
         color: Color.BLACK,
       };
     });
