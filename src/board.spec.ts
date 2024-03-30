@@ -1,4 +1,5 @@
 import { describe, expect, it, beforeEach } from "bun:test";
+
 import { Board, Color, PieceType } from "./board";
 
 type TestPiecePlacementProps = {
@@ -126,5 +127,24 @@ describe("Board", () => {
 
     expect(blackQueenCell.row).toBe(7);
     expect(blackQueenCell.color).toBe(Color.BLACK);
+  });
+
+  it("should create a board with king on the central cell next to the queen", () => {
+    const whiteKingCell = board.getCellsOfPiece({
+      color: Color.WHITE,
+      type: PieceType.KING,
+    })[0];
+    const blackKingCell = board.getCellsOfPiece({
+      color: Color.BLACK,
+      type: PieceType.KING,
+    })[0];
+
+    expect(whiteKingCell.row).toBe(0);
+    expect(whiteKingCell.column).toBe(4);
+    expect(whiteKingCell.color).toBe(Color.BLACK);
+
+    expect(blackKingCell.row).toBe(7);
+    expect(blackKingCell.column).toBe(4);
+    expect(blackKingCell.color).toBe(Color.WHITE);
   });
 });
