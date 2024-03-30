@@ -1,4 +1,4 @@
-type Cell = {
+export type Cell = {
   color: string;
 };
 
@@ -13,5 +13,9 @@ export class Board {
     );
 
     return null;
+  }
+
+  getCellColor({ row, column }: { row: number; column: number }) {
+    return this.rows[row][column].color;
   }
 }
