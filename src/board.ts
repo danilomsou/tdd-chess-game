@@ -1,5 +1,7 @@
 export type Cell = {
   color: string;
+  row: number;
+  column: number;
 };
 
 export enum Color {
@@ -8,19 +10,23 @@ export enum Color {
 }
 
 export class Board {
-  rows: Array<Array<Cell>> = [];
+  cells: Array<Cell> = [];
 
   create() {
-    this.rows = Array.from({ length: 8 }, (_, rowIndex) =>
-      Array.from({ length: 8 }, (_, cellIndex) => ({
-        color: (rowIndex + cellIndex) % 2 === 0 ? Color.WHITE : Color.BLACK,
-      }))
-    );
+    Array.from({ length: 8 }).forEach((_, row) => {
+      Array.from({ length: 8 }).forEach((_, column) => {
+        const color =
+          row % 2 === 0 && column % 2 === 0 ? Color.WHITE : Color.BLACK;
+
+        this.cells.push({ color, row, column });
+      });
+    });
 
     return null;
   }
 
-  getCellColor({ row, column }: { row: number; column: number }) {
-    return this.rows[row][column].color;
+  getCellColor({ row, column }: Partial<Cell>) {
+    return this.cells.find((cell) => cell.row === row && cell.column === column)
+      ?.color;
   }
 }
