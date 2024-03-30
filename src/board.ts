@@ -46,7 +46,7 @@ export class Board {
   private initializeBoard() {
     for (let row = 0; row < this.BOARD_SIZE; row++) {
       for (let column = 0; column < this.BOARD_SIZE; column++) {
-        const color = this.isCellWhite(row, column) ? Color.WHITE : Color.BLACK;
+        const color = this.isCellWhite(row, column) ? Color.BLACK : Color.WHITE;
         this.cells.push({ color, row, column });
       }
     }
@@ -94,13 +94,13 @@ export class Board {
 
     this.cells[whiteQueenColumn - 1].piece = {
       type: PieceType.QUEEN,
-      color: Color.BLACK,
+      color: Color.WHITE,
     };
     this.cells[
       blackQueenColumn + (this.BOARD_SIZE - 1) * this.BOARD_SIZE
     ].piece = {
       type: PieceType.QUEEN,
-      color: Color.WHITE,
+      color: Color.BLACK,
     };
   }
 

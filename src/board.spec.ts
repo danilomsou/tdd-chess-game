@@ -36,19 +36,19 @@ describe("Board", () => {
   });
 
   it("should have alternating colors starting with white at (0,0)", () => {
-    expect(board.cells[0].color).toBe(Color.WHITE);
+    expect(board.cells[0].color).toBe(Color.BLACK);
   });
 
   it("should return the correct color for given cell positions", () => {
-    expect(board.getCellColor({ row: 0, column: 0 })).toBe(Color.WHITE);
-    expect(board.getCellColor({ row: 0, column: 1 })).toBe(Color.BLACK);
-    expect(board.getCellColor({ row: 7, column: 7 })).toBe(Color.WHITE);
-    expect(board.getCellColor({ row: 7, column: 6 })).toBe(Color.BLACK);
+    expect(board.getCellColor({ row: 0, column: 0 })).toBe(Color.BLACK);
+    expect(board.getCellColor({ row: 0, column: 1 })).toBe(Color.WHITE);
+    expect(board.getCellColor({ row: 7, column: 7 })).toBe(Color.BLACK);
+    expect(board.getCellColor({ row: 7, column: 6 })).toBe(Color.WHITE);
   });
 
   it("should create a board with a white cell at the bottom right for each player", () => {
-    expect(board.getCellColor({ row: 7, column: 7 })).toBe(Color.WHITE);
-    expect(board.getCellColor({ row: 0, column: 0 })).toBe(Color.WHITE);
+    expect(board.getCellColor({ row: 7, column: 0 })).toBe(Color.WHITE);
+    expect(board.getCellColor({ row: 0, column: 7 })).toBe(Color.WHITE);
   });
 
   it("should create a board with 8 pawns for each player in the correct positions", () => {
@@ -121,10 +121,10 @@ describe("Board", () => {
       type: PieceType.QUEEN,
     })[0];
 
-    expect(whiteQueenCell.row).toBe(7);
+    expect(whiteQueenCell.row).toBe(0);
     expect(whiteQueenCell.color).toBe(Color.WHITE);
 
-    expect(blackQueenCell.row).toBe(0);
+    expect(blackQueenCell.row).toBe(7);
     expect(blackQueenCell.color).toBe(Color.BLACK);
   });
 });
