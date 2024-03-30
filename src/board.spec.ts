@@ -72,4 +72,28 @@ describe("Board", () => {
       expect([0, 7]).toContain(rook.column);
     });
   });
+
+  it("should create a board with 2 knights for each player in the correct positions", () => {
+    const whiteKnights = board.getPiece({
+      color: Color.WHITE,
+      type: PieceType.KNIGHT,
+    });
+    const blackKnights = board.getPiece({
+      color: Color.BLACK,
+      type: PieceType.KNIGHT,
+    });
+
+    expect(whiteKnights.length).toBe(2);
+    expect(blackKnights.length).toBe(2);
+
+    whiteKnights.forEach((rook) => {
+      expect(rook.row).toBe(0);
+      expect([1, 6]).toContain(rook.column);
+    });
+
+    blackKnights.forEach((rook) => {
+      expect(rook.row).toBe(7);
+      expect([1, 6]).toContain(rook.column);
+    });
+  });
 });
