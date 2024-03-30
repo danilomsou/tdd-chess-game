@@ -16,7 +16,10 @@ export class Board {
     Array.from({ length: 8 }).forEach((_, row) => {
       Array.from({ length: 8 }).forEach((_, column) => {
         const color =
-          row % 2 === 0 && column % 2 === 0 ? Color.WHITE : Color.BLACK;
+          (row % 2 === 0 && column % 2 === 0) ||
+          (row % 2 !== 0 && column % 2 !== 0)
+            ? Color.WHITE
+            : Color.BLACK;
 
         this.cells.push({ color, row, column });
       });
