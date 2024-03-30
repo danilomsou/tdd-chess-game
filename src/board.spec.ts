@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 
-import { Board } from "./board";
+import { Board, Color } from "./board";
 import type { Cell } from "./board";
 
 const setUp = () => {
@@ -45,6 +45,16 @@ describe("Board ", () => {
 
     expect(board.rows[7][7].color).toBe("white");
     expect(board.rows[0][0].color).toBe("white");
+  });
+
+  it("should return only one color from this enum [WHITE, BLACK]", () => {
+    const board = setUp();
+
+    const colors = board.rows.flat().map((cell: Cell) => cell.color);
+
+    expect(
+      colors.every((color) => color === Color.WHITE || color === Color.BLACK)
+    ).toBe(true);
   });
 
   it("should be returns cell color", () => {
