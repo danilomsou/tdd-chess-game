@@ -1,12 +1,35 @@
 import { describe, expect, it, beforeEach } from "bun:test";
 import { Board, Color, PieceType } from "./board";
 
+type TestPiecePlacementProps = {
+  pieceType: PieceType;
+  color: Color;
+  expectedRows: number[];
+  expectedColumns: number[];
+};
+
 describe("Board", () => {
   let board: Board;
 
   beforeEach(() => {
     board = new Board();
   });
+
+  const testPiecePlacement = ({
+    pieceType,
+    color,
+    expectedRows,
+    expectedColumns,
+  }: TestPiecePlacementProps) => {
+    const pieces = board.getPiece({ color, type: pieceType });
+
+    expect(pieces.length).toBe(expectedColumns.length);
+
+    pieces.forEach((piece) => {
+      expect(expectedRows).toContain(piece.row);
+      expect(expectedColumns).toContain(piece.column);
+    });
+  };
 
   it("should be able to create a new board with 64 cells", () => {
     expect(board.cells.length).toBe(64);
@@ -49,75 +72,63 @@ describe("Board", () => {
     });
   });
 
-  it("should create a board with 2 rooks for each player in the correct positions", () => {
-    const whiteRooks = board.getPiece({
+  it("should create a board with 8 pawns for each player in the correct positions", () => {
+    testPiecePlacement({
+      pieceType: PieceType.PAWN,
       color: Color.WHITE,
-      type: PieceType.ROOK,
+      expectedRows: [1],
+      expectedColumns: [0, 1, 2, 3, 4, 5, 6, 7],
     });
-    const blackRooks = board.getPiece({
+    testPiecePlacement({
+      pieceType: PieceType.PAWN,
       color: Color.BLACK,
-      type: PieceType.ROOK,
+      expectedRows: [6],
+      expectedColumns: [0, 1, 2, 3, 4, 5, 6, 7],
     });
+  });
 
-    expect(whiteRooks.length).toBe(2);
-    expect(blackRooks.length).toBe(2);
-
-    whiteRooks.forEach((rook) => {
-      expect(rook.row).toBe(0);
-      expect([0, 7]).toContain(rook.column);
+  it("should create a board with 2 rooks for each player in the correct positions", () => {
+    testPiecePlacement({
+      pieceType: PieceType.ROOK,
+      color: Color.WHITE,
+      expectedRows: [0],
+      expectedColumns: [0, 7],
     });
-
-    blackRooks.forEach((rook) => {
-      expect(rook.row).toBe(7);
-      expect([0, 7]).toContain(rook.column);
+    testPiecePlacement({
+      pieceType: PieceType.ROOK,
+      color: Color.BLACK,
+      expectedRows: [7],
+      expectedColumns: [0, 7],
     });
   });
 
   it("should create a board with 2 knights for each player in the correct positions", () => {
-    const whiteKnights = board.getPiece({
+    testPiecePlacement({
+      pieceType: PieceType.KNIGHT,
       color: Color.WHITE,
-      type: PieceType.KNIGHT,
+      expectedRows: [0],
+      expectedColumns: [1, 6],
     });
-    const blackKnights = board.getPiece({
+    testPiecePlacement({
+      pieceType: PieceType.KNIGHT,
       color: Color.BLACK,
-      type: PieceType.KNIGHT,
-    });
-
-    expect(whiteKnights.length).toBe(2);
-    expect(blackKnights.length).toBe(2);
-
-    whiteKnights.forEach((rook) => {
-      expect(rook.row).toBe(0);
-      expect([1, 6]).toContain(rook.column);
-    });
-
-    blackKnights.forEach((rook) => {
-      expect(rook.row).toBe(7);
-      expect([1, 6]).toContain(rook.column);
+      expectedRows: [7],
+      expectedColumns: [1, 6],
     });
   });
 
   it("should create a board with 2 bishops for each player in the correct positions", () => {
-    const whiteBishops = board.getPiece({
+    testPiecePlacement({
+      pieceType: PieceType.BISHOP,
       color: Color.WHITE,
-      type: PieceType.BISHOP,
+      expectedRows: [0],
+      expectedColumns: [2, 5],
     });
-    const blackBishops = board.getPiece({
+    testPiecePlacement({
+      pieceType: PieceType.BISHOP,
       color: Color.BLACK,
-      type: PieceType.BISHOP,
-    });
-
-    expect(whiteBishops.length).toBe(2);
-    expect(blackBishops.length).toBe(2);
-
-    whiteBishops.forEach((rook) => {
-      expect(rook.row).toBe(0);
-      expect([2, 5]).toContain(rook.column);
-    });
-
-    blackBishops.forEach((rook) => {
-      expect(rook.row).toBe(7);
-      expect([2, 5]).toContain(rook.column);
+      expectedRows: [7],
+      expectedColumns: [2, 5],
     });
   });
 });
