@@ -6,6 +6,7 @@ export enum Color {
 export enum PieceType {
   PAWN = "pawn",
   ROOK = "rook",
+  KNIGHT = "knight",
 }
 
 export type Piece = {
@@ -28,6 +29,9 @@ export class Board {
     this.initializeBoard();
     this.populatePawns();
     this.populateRook();
+    this.populateKnight();
+
+    console.table(this.cells);
   }
 
   private initializeBoard() {
@@ -60,6 +64,22 @@ export class Board {
       this.cells[position].piece = { type: PieceType.ROOK, color: Color.WHITE };
       this.cells[position + lastRow * this.BOARD_SIZE].piece = {
         type: PieceType.ROOK,
+        color: Color.BLACK,
+      };
+    });
+  }
+
+  private populateKnight() {
+    const lastRow = this.BOARD_SIZE - 1;
+    const rookPositions = [1, this.BOARD_SIZE - 2];
+
+    rookPositions.forEach((position) => {
+      this.cells[position].piece = {
+        type: PieceType.KNIGHT,
+        color: Color.WHITE,
+      };
+      this.cells[position + lastRow * this.BOARD_SIZE].piece = {
+        type: PieceType.KNIGHT,
         color: Color.BLACK,
       };
     });
