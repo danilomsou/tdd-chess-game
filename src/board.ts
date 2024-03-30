@@ -28,27 +28,25 @@ export class Board {
   }
 
   private initializeBoard() {
-    Array.from({ length: 8 }).forEach((_, row) => {
-      Array.from({ length: 8 }).forEach((_, column) => {
+    for (let row = 0; row < 8; row++) {
+      for (let column = 0; column < 8; column++) {
         const color = this.isCellWhite(row, column) ? Color.WHITE : Color.BLACK;
-        this.cells.push({
-          color,
-          row,
-          column,
-        });
-      });
-    });
+        this.cells.push({ color, row, column });
+      }
+    }
   }
 
   private populatePawns() {
-    Array.from({ length: 8 }).forEach((_, column) => {
-      this.cells.find(
-        (cell) => cell.row === 0 && cell.column === column
-      )!.piece = { type: PieceType.PAWN, color: Color.WHITE };
-      this.cells.find(
-        (cell) => cell.row === 2 && cell.column === column
-      )!.piece = { type: PieceType.PAWN, color: Color.BLACK };
-    });
+    for (let column = 0; column < 8; column++) {
+      this.cells[0 + column].piece = {
+        type: PieceType.PAWN,
+        color: Color.WHITE,
+      };
+      this.cells[8 + column].piece = {
+        type: PieceType.PAWN,
+        color: Color.BLACK,
+      };
+    }
   }
 
   getCellColor({ row, column }: Partial<Cell>): Color | undefined {
