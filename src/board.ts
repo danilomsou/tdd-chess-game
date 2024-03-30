@@ -1,5 +1,5 @@
 export type Cell = {
-  color: string;
+  color: Color;
   row: number;
   column: number;
 };
@@ -10,31 +10,27 @@ export enum Color {
 }
 
 export class Board {
-  cells: Array<Cell> = [];
+  cells: Cell[] = [];
 
-  create() {
+  constructor() {
+    this.initializeBoard();
+  }
+
+  private initializeBoard() {
     Array.from({ length: 8 }).forEach((_, row) => {
       Array.from({ length: 8 }).forEach((_, column) => {
         const color = this.isCellWhite(row, column) ? Color.WHITE : Color.BLACK;
-
         this.cells.push({ color, row, column });
       });
     });
-
-    return null;
   }
 
-  getCellColor({ row, column }: Partial<Cell>) {
+  getCellColor({ row, column }: Partial<Cell>): Color | undefined {
     return this.cells.find((cell) => cell.row === row && cell.column === column)
       ?.color;
   }
 
-  isCellWhite(row: number, column: number) {
-    if (
-      (row % 2 === 0 && column % 2 === 0) ||
-      (row % 2 !== 0 && column % 2 !== 0)
-    ) {
-      return true;
-    }
+  private isCellWhite(row: number, column: number): boolean {
+    return (row + column) % 2 === 0;
   }
 }
