@@ -21,7 +21,7 @@ describe("Board", () => {
     expectedRows,
     expectedColumns,
   }: TestPiecePlacementProps) => {
-    const pieces = board.getPiece({ color, type: pieceType });
+    const pieces = board.getCellsOfPiece({ color, type: pieceType });
 
     expect(pieces.length).toBe(expectedColumns.length);
 
@@ -49,27 +49,6 @@ describe("Board", () => {
   it("should create a board with a white cell at the bottom right for each player", () => {
     expect(board.getCellColor({ row: 7, column: 7 })).toBe(Color.WHITE);
     expect(board.getCellColor({ row: 0, column: 0 })).toBe(Color.WHITE);
-  });
-
-  it("should create a board with 8 pawns for each player in the correct positions", () => {
-    const whitePawns = board.getPiece({
-      color: Color.WHITE,
-      type: PieceType.PAWN,
-    });
-    const blackPawns = board.getPiece({
-      color: Color.BLACK,
-      type: PieceType.PAWN,
-    });
-
-    expect(whitePawns.length).toBe(8);
-    expect(blackPawns.length).toBe(8);
-
-    whitePawns.map(({ row }) => {
-      expect(row).toBe(1);
-    });
-    blackPawns.map(({ row }) => {
-      expect(row).toBe(6);
-    });
   });
 
   it("should create a board with 8 pawns for each player in the correct positions", () => {

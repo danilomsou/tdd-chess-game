@@ -103,7 +103,7 @@ export class Board {
     });
   }
 
-  getPiece({ color, type }: { color: Color; type: PieceType }) {
+  getCellsOfPiece({ color, type }: { color: Color; type: PieceType }) {
     return this.cells.filter(
       ({ piece }) => piece?.type === type && piece.color === color
     );
