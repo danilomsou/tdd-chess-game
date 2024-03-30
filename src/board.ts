@@ -5,6 +5,7 @@ export enum Color {
 
 export enum PieceType {
   PAWN = "pawn",
+  ROOK = "rook",
 }
 
 export type Piece = {
@@ -20,16 +21,18 @@ export type Cell = {
 };
 
 export class Board {
+  private BOARD_SIZE = 8;
   cells: Cell[] = [];
 
   constructor() {
     this.initializeBoard();
     this.populatePawns();
+    this.populateRook();
   }
 
   private initializeBoard() {
-    for (let row = 0; row < 8; row++) {
-      for (let column = 0; column < 8; column++) {
+    for (let row = 0; row < this.BOARD_SIZE; row++) {
+      for (let column = 0; column < this.BOARD_SIZE; column++) {
         const color = this.isCellWhite(row, column) ? Color.WHITE : Color.BLACK;
         this.cells.push({ color, row, column });
       }
@@ -37,8 +40,8 @@ export class Board {
   }
 
   private populatePawns() {
-    for (let column = 0; column < 8; column++) {
-      this.cells[8 + column].piece = {
+    for (let column = 0; column < this.BOARD_SIZE; column++) {
+      this.cells[this.BOARD_SIZE + column].piece = {
         type: PieceType.PAWN,
         color: Color.WHITE,
       };
@@ -49,9 +52,22 @@ export class Board {
     }
   }
 
-  getPawns(color: Color) {
+  private populateRook() {
+    const lastRow = this.BOARD_SIZE - 1;
+    const rookPositions = [0, this.BOARD_SIZE - 1];
+
+    rookPositions.forEach((position) => {
+      this.cells[position].piece = { type: PieceType.ROOK, color: Color.WHITE };
+      this.cells[position + lastRow * this.BOARD_SIZE].piece = {
+        type: PieceType.ROOK,
+        color: Color.BLACK,
+      };
+    });
+  }
+
+  getPiece({ color, type }: { color: Color; type: PieceType }) {
     return this.cells.filter(
-      ({ piece }) => piece?.type === PieceType.PAWN && piece.color === color
+      ({ piece }) => piece?.type === type && piece.color === color
     );
   }
 
