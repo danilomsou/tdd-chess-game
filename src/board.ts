@@ -54,12 +54,12 @@ export class Board {
   }
 
   private populatePieces() {
-    this.populatePawns();
     this.populateRooks();
     this.populateKnights();
     this.populateBishops();
     this.populateQueens();
     this.populateKings();
+    this.populatePawns();
   }
 
   private populatePawns() {
