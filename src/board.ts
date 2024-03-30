@@ -49,6 +49,12 @@ export class Board {
     }
   }
 
+  getPawns(color: Color) {
+    return this.cells.filter(
+      ({ piece }) => piece?.type === PieceType.PAWN && piece.color === color
+    );
+  }
+
   getCellColor({ row, column }: Partial<Cell>): Color | undefined {
     return this.cells.find((cell) => cell.row === row && cell.column === column)
       ?.color;
