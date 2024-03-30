@@ -36,11 +36,11 @@ describe("Board ", () => {
   it("should have a white cell and an alternating black cell.", () => {
     const board = setUp();
 
-    board.cells.forEach((cell: Cell) => {
-      if (isCellWhite(cell)) {
-        expect(cell.color).toBe(Color.WHITE);
+    board.cells.forEach(({ row, column, color }: Cell) => {
+      if (isCellWhite(row, column)) {
+        expect(color).toBe(Color.WHITE);
       } else {
-        expect(cell.color).toBe(Color.BLACK);
+        expect(color).toBe(Color.BLACK);
       }
     });
   });
@@ -52,10 +52,10 @@ describe("Board ", () => {
     expect(board.getCellColor(secondPlayerFirstRightCell)).toBe(Color.WHITE);
   });
 
-  const isCellWhite = (cell: Cell) => {
+  const isCellWhite = (row: number, column: number) => {
     if (
-      (cell.row % 2 === 0 && cell.column % 2 === 0) ||
-      (cell.row % 2 !== 0 && cell.column % 2 !== 0)
+      (row % 2 === 0 && column % 2 === 0) ||
+      (row % 2 !== 0 && column % 2 !== 0)
     ) {
       return true;
     }

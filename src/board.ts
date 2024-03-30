@@ -15,11 +15,7 @@ export class Board {
   create() {
     Array.from({ length: 8 }).forEach((_, row) => {
       Array.from({ length: 8 }).forEach((_, column) => {
-        const color =
-          (row % 2 === 0 && column % 2 === 0) ||
-          (row % 2 !== 0 && column % 2 !== 0)
-            ? Color.WHITE
-            : Color.BLACK;
+        const color = this.isCellWhite(row, column) ? Color.WHITE : Color.BLACK;
 
         this.cells.push({ color, row, column });
       });
@@ -31,5 +27,14 @@ export class Board {
   getCellColor({ row, column }: Partial<Cell>) {
     return this.cells.find((cell) => cell.row === row && cell.column === column)
       ?.color;
+  }
+
+  isCellWhite(row: number, column: number) {
+    if (
+      (row % 2 === 0 && column % 2 === 0) ||
+      (row % 2 !== 0 && column % 2 !== 0)
+    ) {
+      return true;
+    }
   }
 }
