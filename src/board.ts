@@ -38,11 +38,11 @@ export class Board {
 
   private populatePawns() {
     for (let column = 0; column < 8; column++) {
-      this.cells[0 + column].piece = {
+      this.cells[8 + column].piece = {
         type: PieceType.PAWN,
         color: Color.WHITE,
       };
-      this.cells[8 + column].piece = {
+      this.cells[48 + column].piece = {
         type: PieceType.PAWN,
         color: Color.BLACK,
       };
