@@ -27,17 +27,6 @@ describe("Board ", () => {
     ).toBe(true);
   });
 
-  it("should be returns cell color", () => {
-    const board = setUp();
-
-    const cell = {
-      row: 0,
-      column: 0,
-    };
-
-    expect(board.getCellColor(cell)).toBe("white");
-  });
-
   it("should be able to create a new board with 64 cells", () => {
     const board = setUp();
 
@@ -48,9 +37,7 @@ describe("Board ", () => {
     const board = setUp();
 
     board.cells.forEach((cell: Cell) => {
-      if (cell.row % 2 === 0 && cell.column % 2 === 0) {
-        expect(cell.color).toBe(Color.WHITE);
-      } else if (cell.row % 2 !== 0 && cell.column % 2 !== 0) {
+      if (isCellWhite(cell)) {
         expect(cell.color).toBe(Color.WHITE);
       } else {
         expect(cell.color).toBe(Color.BLACK);
@@ -61,10 +48,19 @@ describe("Board ", () => {
   it("should create a board with a white cell at the bottom right for each player", () => {
     const board = setUp();
 
-    const firstPlayerLastRightCell = { row: 7, column: 7 };
-    const secondPlayerFirstRightCell = { row: 0, column: 0 };
-
     expect(board.getCellColor(firstPlayerLastRightCell)).toBe(Color.WHITE);
     expect(board.getCellColor(secondPlayerFirstRightCell)).toBe(Color.WHITE);
   });
+
+  const isCellWhite = (cell: Cell) => {
+    if (
+      (cell.row % 2 === 0 && cell.column % 2 === 0) ||
+      (cell.row % 2 !== 0 && cell.column % 2 !== 0)
+    ) {
+      return true;
+    }
+  };
+
+  const firstPlayerLastRightCell = { row: 7, column: 7 };
+  const secondPlayerFirstRightCell = { row: 0, column: 0 };
 });
